@@ -3,6 +3,8 @@ import { observer } from 'mobx-react-lite';
 import { Form, Input, Button, message } from 'antd';
 import request from 'service/fetch';
 import styles from './index.module.scss';
+import { useRouter } from 'next/router';
+import { useStore } from 'store/index';
 
 const layout = {
   labelCol: { span: 4 },
@@ -14,7 +16,10 @@ const tailLayout = {
 };
 
 const UserProfile = () => {
+  const store = useStore();
+  const { userId } = store.user.userInfo;
   const [form] = Form.useForm();
+  const { push } = useRouter();
 
   useEffect(() => {
     request.get('/api/user/detail').then((res: any) => {
@@ -32,9 +37,13 @@ const UserProfile = () => {
     request.post('/api/user/update', { ...values }).then((res: any) => {
       if (res?.code === 0) {
         message.success('Modify successfully');
+        console.log("test");
+        console.log(res?.data);
+        
       } else {
         message.error(res?.msg || 'Modify unsuccessfully');
       }
+      push(`/user/${userId}`);
     });
   };
 

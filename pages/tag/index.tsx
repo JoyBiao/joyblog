@@ -98,7 +98,7 @@ const Tag = () => {
                 <div>{tag?.follow_count} Follow {tag?.article_count} Article</div>
                 {
                   tag?.users?.find((user) => Number(user?.id) === Number(userId)) ? (
-                    <Button type='primary' onClick={() => handleUnFollow(tag?.id)}>已关注</Button>
+                    <Button type='primary' onClick={() => handleUnFollow(tag?.id)}>Following</Button>
                   ) : (
                     <Button onClick={() => handleFollow(tag?.id)}>Follow</Button>
                   )
